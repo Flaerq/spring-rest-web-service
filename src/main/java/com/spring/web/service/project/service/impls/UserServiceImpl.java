@@ -8,14 +8,13 @@ import com.spring.web.service.project.service.UserService;
 import com.spring.web.service.project.utils.Utils;
 import com.spring.web.service.project.dto.UserDto;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private Mapper<UserEntity, UserDto> userMapper;
@@ -56,7 +55,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UserEntity user = userRepository.findByEmail(username).orElseThrow(() -> new RuntimeException());
+        UserEntity user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username));
 
         return new CustomUserDetails(user);
     }
