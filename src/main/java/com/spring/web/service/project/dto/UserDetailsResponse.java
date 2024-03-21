@@ -1,4 +1,4 @@
-package com.spring.web.service.project.model.response;
+package com.spring.web.service.project.dto;
 
 
 import lombok.AllArgsConstructor;

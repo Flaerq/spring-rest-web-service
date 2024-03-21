@@ -1,4 +1,4 @@
-package com.spring.web.service.project.io.entity;
+package com.spring.web.service.project.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -40,6 +40,6 @@ public class UserEntity implements Serializable {
     @Column(name = "email_verification_token")
     private String emailVerificationToken;
 
-    @Column(name = "email_verification_status",nullable=false, columnDefinition = "boolean default false")
-    private Boolean emailVerificationStatus;
+    @Column(name = "email_verification_status",nullable=false)
+    private Boolean emailVerificationStatus = false;
 }

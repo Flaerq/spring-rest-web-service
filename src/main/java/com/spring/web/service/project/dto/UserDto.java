@@ -1,4 +1,4 @@
-package com.spring.web.service.project.shared.dto;
+package com.spring.web.service.project.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -32,5 +32,5 @@ public class UserDto implements Serializable {
 
     private String emailVerificationToken;
 
-    private String emailVerificationStatus;
+    private Boolean emailVerificationStatus = false;
 }
