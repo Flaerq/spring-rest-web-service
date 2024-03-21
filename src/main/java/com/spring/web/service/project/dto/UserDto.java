@@ -1,12 +1,14 @@
 package com.spring.web.service.project.dto;
 
 
+import com.spring.web.service.project.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -33,4 +35,6 @@ public class UserDto implements Serializable {
     private String emailVerificationToken;
 
     private Boolean emailVerificationStatus = false;
+
+    private List<Role> roles;
 }

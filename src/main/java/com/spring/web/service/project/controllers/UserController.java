@@ -3,11 +3,14 @@ package com.spring.web.service.project.controllers;
 
 import com.spring.web.service.project.dto.UserDetailsRequest;
 import com.spring.web.service.project.dto.UserDetailsResponse;
+import com.spring.web.service.project.dto.UserLoginRequest;
 import com.spring.web.service.project.service.UserService;
 import com.spring.web.service.project.dto.UserDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +38,7 @@ public class UserController {
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
 
-
     }
+
+
 }

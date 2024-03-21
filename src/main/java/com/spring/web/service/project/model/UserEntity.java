@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -42,4 +43,12 @@ public class UserEntity implements Serializable {
 
     @Column(name = "email_verification_status",nullable=false)
     private Boolean emailVerificationStatus = false;
+
+
+    @ManyToMany(cascade =  CascadeType.ALL)
+    @JoinTable(name = "user_roles",
+        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<Role> roles;
+
 }

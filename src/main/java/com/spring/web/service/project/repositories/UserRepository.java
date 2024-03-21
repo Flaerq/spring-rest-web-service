@@ -15,4 +15,5 @@ public interface UserRepository extends CrudRepository<UserEntity, Long>{
     UserEntity findByFirstName(String firstName);
 
 
+
 }
