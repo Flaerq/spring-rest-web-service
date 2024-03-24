@@ -1,6 +1,8 @@
 package com.spring.web.service.project.security;
 
 
+import com.spring.web.service.project.model.Role;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -44,6 +47,37 @@ public class JwtService {
                 .setExpiration(expirationDate)
                 .signWith(secretKey).compact();
     }
+
+    private Claims extractAllClaims(String token){
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJwt(token)
+                .getBody();
+    }
+
+    public String extractEmail(String token){
+        return extractAllClaims(token).getSubject();
+    }
+
+    public List<Role> extractRoles(String token){
+        return extractAllClaims(token).get("roles", List.class);
+    }
+
+    private Date extractExpiration(String token){
+        return extractAllClaims(token).getExpiration();
+    }
+
+    private boolean isTokenExpired(String token){
+        return extractExpiration(token).before(new Date());
+    }
+
+    public boolean isTokenValid(String token, UserDetails userDetails){
+        return extractEmail(token).equals(userDetails.getUsername()) && !isTokenExpired(token);
+
+    }
+
+
 
 
 
