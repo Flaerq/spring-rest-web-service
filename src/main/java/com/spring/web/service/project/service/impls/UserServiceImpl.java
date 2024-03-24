@@ -2,16 +2,15 @@ package com.spring.web.service.project.service.impls;
 
 import com.spring.web.service.project.model.UserEntity;
 import com.spring.web.service.project.mappers.Mapper;
+import com.spring.web.service.project.repositories.RoleRepository;
 import com.spring.web.service.project.repositories.UserRepository;
-import com.spring.web.service.project.security.CustomUserDetails;
 import com.spring.web.service.project.service.UserService;
 import com.spring.web.service.project.utils.Utils;
 import com.spring.web.service.project.dto.UserDto;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Optional;
 
 
@@ -19,15 +18,17 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private RoleRepository roleRepository;
     private Mapper<UserEntity, UserDto> userMapper;
     private Utils utils;
     private BCryptPasswordEncoder passwordEncoder;
 
     private UserServiceImpl(UserRepository userRepository,
-                            Mapper<UserEntity, UserDto> userMapper,
+                            RoleRepository roleRepository, Mapper<UserEntity, UserDto> userMapper,
                             Utils utils,
                             BCryptPasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.userMapper = userMapper;
         this.utils = utils;
         this.passwordEncoder = passwordEncoder;
@@ -46,6 +47,7 @@ public class UserServiceImpl implements UserService {
 
         user.setEncryptedPassword(encryptedPassword);
         user.setUserId(publicUserId);
+        user.setRoles(Collections.singletonList(roleRepository.findByName("USER").get()));
 
         UserEntity savedUser = userRepository.save(userMapper.mapFrom(user));
 

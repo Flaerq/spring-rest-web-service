@@ -24,7 +24,7 @@ public class JwtService {
     private Key secretKey;
 
     public JwtService(@Value("${jwt.secret}") String secret){
-        Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        secretKey = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
     public String generateToken(UserDetails userDetails){

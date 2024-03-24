@@ -1,5 +1,6 @@
 package com.spring.web.service.project.security;
 
+import com.spring.web.service.project.dto.UserDto;
 import com.spring.web.service.project.model.Role;
 import com.spring.web.service.project.model.UserEntity;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,15 @@ public class CustomUserDetails implements UserDetails {
     private List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
     public CustomUserDetails(UserEntity user){
+        email = user.getEmail();
+        password = user.getEncryptedPassword();
+        grantedAuthorities = user.getRoles().stream()
+                .map(Role::getName)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
+
+    public CustomUserDetails(UserDto user){
         email = user.getEmail();
         password = user.getEncryptedPassword();
         grantedAuthorities = user.getRoles().stream()
