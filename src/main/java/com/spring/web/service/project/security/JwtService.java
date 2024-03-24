@@ -49,15 +49,14 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token){
-        return Jwts.parserBuilder()
+        return Jwts.parser()
                 .setSigningKey(secretKey)
-                .build()
-                .parseClaimsJwt(token)
+                .parseClaimsJws(token)
                 .getBody();
     }
 
     public String extractEmail(String token){
-        return extractAllClaims(token).getSubject();
+        return (String)extractAllClaims(token).get("username");
     }
 
     public List<Role> extractRoles(String token){
