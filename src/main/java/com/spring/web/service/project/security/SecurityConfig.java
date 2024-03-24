@@ -23,9 +23,9 @@ public class SecurityConfig {
     private UserDetailsService userService;
     private AuthenticationConfiguration configuration;
 
-    public SecurityConfig(UserDetailsService userService, AuthenticationConfiguration configuration){
+    public SecurityConfig(JwtAuthenticationFilter jwtFilter, UserDetailsService userService){
+        this.jwtFilter = jwtFilter;
         this.userService = userService;
-        this.configuration = configuration;
     }
 
     @Bean
